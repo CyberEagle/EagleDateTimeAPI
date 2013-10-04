@@ -1,4 +1,20 @@
-package br.com.cybereagle.eagledatetime.internal.impl;
+/*
+ * Copyright 2013 Cyber Eagle
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
+package br.com.cybereagle.eagledatetime.internal;
 
 import br.com.cybereagle.eagledatetime.DateTimeUnit;
 import br.com.cybereagle.eagledatetime.Time;
@@ -8,28 +24,36 @@ import java.util.TimeZone;
 
 public class TimeImpl implements Time {
 
-    public TimeImpl(Integer aHour, Integer aMinute, Integer aSecond, Integer aNanoseconds){
+    private Integer hour;
+    private Integer minute;
+    private Integer second;
+    private Integer nanoseconds;
 
+    public TimeImpl(Integer hour, Integer minute, Integer second, Integer nanoseconds) {
+        this.hour = hour;
+        this.minute = minute;
+        this.second = second;
+        this.nanoseconds = nanoseconds;
     }
 
     @Override
     public Integer getHour() {
-        return null;
+        return hour;
     }
 
     @Override
     public Integer getMinute() {
-        return null;
+        return minute;
     }
 
     @Override
     public Integer getSecond() {
-        return null;
+        return second;
     }
 
     @Override
     public Integer getNanoseconds() {
-        return null;
+        return nanoseconds;
     }
 
     @Override

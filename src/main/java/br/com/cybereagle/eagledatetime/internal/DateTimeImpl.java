@@ -1,4 +1,20 @@
-package br.com.cybereagle.eagledatetime.internal.impl;
+/*
+ * Copyright 2013 Cyber Eagle
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
+package br.com.cybereagle.eagledatetime.internal;
 
 import br.com.cybereagle.eagledatetime.Date;
 import br.com.cybereagle.eagledatetime.DateTime;
@@ -14,7 +30,7 @@ public class DateTimeImpl implements DateTime {
     private final Date date;
     private final Time time;
 
-    public DateTimeImpl(Date date, Time time){
+    public DateTimeImpl(Date date, Time time) {
         this.date = date;
         this.time = time;
     }
@@ -90,10 +106,9 @@ public class DateTimeImpl implements DateTime {
 
     @Override
     public boolean isInTheFuture(TimeZone timeZone) {
-        if(date.isInTheFuture(timeZone)){
+        if (date.isInTheFuture(timeZone)) {
             return true;
-        }
-        else if(date.isToday()){
+        } else if (date.isToday()) {
             return time.isInTheFuture(timeZone);
         }
 
@@ -102,10 +117,9 @@ public class DateTimeImpl implements DateTime {
 
     @Override
     public boolean isInThePast(TimeZone timeZone) {
-        if(date.isInThePast(timeZone)){
+        if (date.isInThePast(timeZone)) {
             return true;
-        }
-        else if(date.isToday()){
+        } else if (date.isToday()) {
             return time.isInThePast(timeZone);
         }
 
