@@ -18,6 +18,7 @@ package br.com.cybereagle.eagledatetime;
 
 import br.com.cybereagle.eagledatetime.internal.interfaces.CommonDateTimeOperations;
 
+import java.util.List;
 import java.util.TimeZone;
 
 public interface Time extends CommonDateTimeOperations<Time> {
@@ -32,7 +33,9 @@ public interface Time extends CommonDateTimeOperations<Time> {
 
     Integer getNanoseconds();
 
-    long numberOfSecondsFrom(Time time);
+    int numberOfSecondsFrom(Time time);
+
+    int numberOfSeconds();
 
     Time plus(Integer hour, Integer minute, Integer second, Integer nanoseconds);
 
@@ -41,5 +44,7 @@ public interface Time extends CommonDateTimeOperations<Time> {
     Time minus(Integer hour, Integer minute, Integer second, Integer nanoseconds);
 
     Time minus(Integer hour, Integer minute, Integer second);
+
+    String format(String format, List<String> amPmIndicators);
 
 }

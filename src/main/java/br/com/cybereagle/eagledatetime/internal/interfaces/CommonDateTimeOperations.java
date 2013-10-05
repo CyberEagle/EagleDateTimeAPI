@@ -30,8 +30,6 @@ public interface CommonDateTimeOperations<T> extends Comparable<T>, Serializable
 
     long getNanosecondsInstant(TimeZone timeZone);
 
-    boolean isParseable(String cadidate);
-
     T minus(T object);
 
     T plus(T object);

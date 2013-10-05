@@ -19,17 +19,17 @@ package br.com.cybereagle.eagledatetime.internal.util;
 import java.lang.reflect.Array;
 import java.util.logging.Logger;
 
-final class Util {
+public final class Util {
 
-    static boolean textHasContent(String aText) {
+    public static boolean textHasContent(String aText) {
         return (aText != null) && (aText.trim().length() > 0);
     }
 
-    static String quote(Object aObject) {
+    public static String quote(Object aObject) {
         return SINGLE_QUOTE + String.valueOf(aObject) + SINGLE_QUOTE;
     }
 
-    static String getArrayAsString(Object aArray) {
+    public static String getArrayAsString(Object aArray) {
         final String fSTART_CHAR = "[";
         final String fEND_CHAR = "]";
         final String fSEPARATOR = ", ";
@@ -56,7 +56,7 @@ final class Util {
         return result.toString();
     }
 
-    static Logger getLogger(Class<?> aClass) {
+    public static Logger getLogger(Class<?> aClass) {
         return Logger.getLogger(aClass.getPackage().getName());
     }
 

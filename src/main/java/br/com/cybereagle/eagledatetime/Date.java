@@ -18,6 +18,8 @@ package br.com.cybereagle.eagledatetime;
 
 import br.com.cybereagle.eagledatetime.internal.interfaces.CommonDateTimeOperations;
 
+import java.util.List;
+
 public interface Date extends CommonDateTimeOperations<Date> {
 
     Integer getDay();
@@ -57,5 +59,7 @@ public interface Date extends CommonDateTimeOperations<Date> {
     Date plus(Integer year, Integer month, Integer day);
 
     Date minus(Integer year, Integer month, Integer day);
+
+    String format(String format, List<String> months, List<String> weekdays);
 
 }

@@ -21,22 +21,22 @@ package br.com.cybereagle.eagledatetime;
  * </tr>
  * <tr>
  * <td>May 31 + 1 Month</td>
- * <td>LastDay</td>
+ * <td>LAST_DAY</td>
  * <td>June 30</td>
  * </tr>
  * <tr>
  * <td>May 31 + 1 Month</td>
- * <td>FirstDay</td>
+ * <td>FIRST_DAY</td>
  * <td>July 1</td>
  * </tr>
  * <tr>
  * <td>December 31, 2001 + 2 Months</td>
- * <td>Spillover</td>
+ * <td>SPILLOVER</td>
  * <td>March 3</td>
  * </tr>
  * <tr>
  * <td>May 31 + 1 Month</td>
- * <td>Abort</td>
+ * <td>ABORT</td>
  * <td>RuntimeException</td>
  * </tr>
  * </table>
@@ -45,17 +45,17 @@ public enum DayOverflow {
     /**
      * Coerce the day to the last day of the month.
      */
-    LastDay,
+    LAST_DAY,
     /**
      * Coerce the day to the first day of the next month.
      */
-    FirstDay,
+    FIRST_DAY,
     /**
-     * Spillover the day into the next month.
+     * SPILLOVER the day into the next month.
      */
-    Spillover,
+    SPILLOVER,
     /**
      * Throw a RuntimeException.
      */
-    Abort;
+    ABORT;
 }

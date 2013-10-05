@@ -19,15 +19,14 @@ package br.com.cybereagle.eagledatetime.internal.gregorian;
 import br.com.cybereagle.eagledatetime.Date;
 import br.com.cybereagle.eagledatetime.exception.ItemOutOfRange;
 import br.com.cybereagle.eagledatetime.factory.GregorianDateTime;
+import br.com.cybereagle.eagledatetime.internal.format.DateTimeAdapter;
+import br.com.cybereagle.eagledatetime.internal.format.DateTimeFormatter;
 import br.com.cybereagle.eagledatetime.internal.util.DateTimeUtil;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.util.*;
 
 import static br.com.cybereagle.eagledatetime.internal.util.DateTimeUtil.*;
 
@@ -43,6 +42,7 @@ public class DateImpl implements Date {
         this.year = year;
         this.month = month;
         this.day = day;
+        validateState();
     }
 
     private void validateState(){
@@ -193,15 +193,21 @@ public class DateImpl implements Date {
     }
 
     @Override
+    public String format(String format, List<String> months, List<String> weekdays) {
+        DateTimeFormatter dateTimeFormatter = new DateTimeFormatter(format, months, weekdays, null);
+        return dateTimeFormatter.format(new DateTimeAdapter(this));
+    }
+
+    @Override
     public String format(String format) {
-        // TODO
-        return null;
+        DateTimeFormatter dateTimeFormatter = new DateTimeFormatter(format);
+        return dateTimeFormatter.format(new DateTimeAdapter(this));
     }
 
     @Override
     public String format(String format, Locale locale) {
-        // TODO
-        return null;
+        DateTimeFormatter dateTimeFormatter = new DateTimeFormatter(format, locale);
+        return dateTimeFormatter.format(new DateTimeAdapter(this));
     }
 
     @Override
@@ -236,11 +242,6 @@ public class DateImpl implements Date {
         calendar.set(Calendar.MILLISECOND, 0);
 
         return calendar.getTimeInMillis() * MILLION;
-    }
-
-    @Override
-    public boolean isParseable(String cadidate) {
-        return false;
     }
 
     @Override
@@ -293,7 +294,12 @@ public class DateImpl implements Date {
 
     @Override
     public String toString() {
-        return String.format("%d/%d/%d", year, month, day);
+        final StringBuilder sb = new StringBuilder("DateImpl{");
+        sb.append("year=").append(year);
+        sb.append(", month=").append(month);
+        sb.append(", day=").append(day);
+        sb.append('}');
+        return sb.toString();
     }
 
     /**
