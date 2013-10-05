@@ -16,14 +16,11 @@
 
 package br.com.cybereagle.eagledatetime.internal.interfaces;
 
-import br.com.cybereagle.eagledatetime.DateTimeUnit;
-
+import java.io.Serializable;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public interface CommonDateTimeOperations<T> extends Comparable<T> {
-
-    T changeTimeZone(TimeZone fromTimeZone, TimeZone toTimeZone);
+public interface CommonDateTimeOperations<T> extends Comparable<T>, Serializable {
 
     String format(String format);
 
@@ -38,14 +35,6 @@ public interface CommonDateTimeOperations<T> extends Comparable<T> {
     T minus(T object);
 
     T plus(T object);
-
-    T truncate(DateTimeUnit unit);
-
-    DateTimeUnit getPrecision();
-
-    boolean unitsAllAbsent(DateTimeUnit... units);
-
-    boolean unitsAllPresent(DateTimeUnit... units);
 
     boolean isInTheFuture(TimeZone timeZone);
 

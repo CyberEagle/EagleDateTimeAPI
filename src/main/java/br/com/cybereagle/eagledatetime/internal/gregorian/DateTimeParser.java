@@ -1,11 +1,9 @@
-package br.com.cybereagle.eagledatetime.internal;
+package br.com.cybereagle.eagledatetime.internal.gregorian;
 
 import br.com.cybereagle.eagledatetime.Date;
 import br.com.cybereagle.eagledatetime.DateTime;
 import br.com.cybereagle.eagledatetime.Time;
-import br.com.cybereagle.eagledatetime.factory.DateFactory;
-import br.com.cybereagle.eagledatetime.factory.DateTimeFactory;
-import br.com.cybereagle.eagledatetime.factory.TimeFactory;
+import br.com.cybereagle.eagledatetime.factory.GregorianDateTime;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -77,7 +75,7 @@ public final class DateTimeParser {
 
         parseDateInternal(parts.datePart);
 
-        return DateFactory.create(fYear, fMonth, fDay);
+        return GregorianDateTime.newDate(fYear, fMonth, fDay);
     }
 
     /**
@@ -98,7 +96,7 @@ public final class DateTimeParser {
 
         parseTimeInternal(parts.timePart);
 
-        return TimeFactory.create(fHour, fMinute, fSecond, fNanosecond);
+        return GregorianDateTime.newTime(fHour, fMinute, fSecond, fNanosecond);
     }
 
     /**
@@ -120,7 +118,7 @@ public final class DateTimeParser {
         parseDateInternal(parts.datePart);
         parseTimeInternal(parts.timePart);
 
-        return DateTimeFactory.create(fYear, fMonth, fDay, fHour, fMinute, fSecond, fNanosecond);
+        return GregorianDateTime.newDateTime(fYear, fMonth, fDay, fHour, fMinute, fSecond, fNanosecond);
     }
 
     /**

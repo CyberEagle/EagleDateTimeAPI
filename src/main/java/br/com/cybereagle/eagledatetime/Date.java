@@ -54,4 +54,8 @@ public interface Date extends CommonDateTimeOperations<Date> {
 
     Integer numberOfDaysFrom(Date date);
 
+    Date plus(Integer year, Integer month, Integer day);
+
+    Date minus(Integer year, Integer month, Integer day);
+
 }

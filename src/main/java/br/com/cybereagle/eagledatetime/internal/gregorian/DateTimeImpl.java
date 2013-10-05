@@ -14,13 +14,12 @@
  *    limitations under the License.
  */
 
-package br.com.cybereagle.eagledatetime.internal;
+package br.com.cybereagle.eagledatetime.internal.gregorian;
 
 import br.com.cybereagle.eagledatetime.Date;
 import br.com.cybereagle.eagledatetime.DateTime;
-import br.com.cybereagle.eagledatetime.DateTimeUnit;
 import br.com.cybereagle.eagledatetime.Time;
-import br.com.cybereagle.eagledatetime.factory.TimeFactory;
+import br.com.cybereagle.eagledatetime.factory.GregorianDateTime;
 
 import java.util.Locale;
 import java.util.TimeZone;
@@ -88,14 +87,14 @@ public class DateTimeImpl implements DateTime {
     @Override
     public DateTime getStartOfMonth() {
         Date startOfMonth = date.getStartOfMonth();
-        Time startOfDay = TimeFactory.getStartOfDay();
+        Time startOfDay = GregorianDateTime.getStartOfDay();
         return new DateTimeImpl(startOfMonth, startOfDay);
     }
 
     @Override
     public DateTime getEndOfMonth() {
         Date endOfMonth = date.getEndOfMonth();
-        Time endOfDay = TimeFactory.getEndOfDay();
+        Time endOfDay = GregorianDateTime.getEndOfDay();
         return new DateTimeImpl(endOfMonth, endOfDay);
     }
 
@@ -178,6 +177,26 @@ public class DateTimeImpl implements DateTime {
     }
 
     @Override
+    public DateTime plus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, Integer nanoseconds) {
+        return null;
+    }
+
+    @Override
+    public DateTime plus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second) {
+        return null;
+    }
+
+    @Override
+    public DateTime minus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, Integer nanoseconds) {
+        return null;
+    }
+
+    @Override
+    public DateTime minus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second) {
+        return null;
+    }
+
+    @Override
     public DateTime changeTimeZone(TimeZone fromTimeZone, TimeZone toTimeZone) {
         // TODO
         return null;
@@ -223,29 +242,6 @@ public class DateTimeImpl implements DateTime {
     public DateTime plus(DateTime dateTime) {
         // TODO
         return null;
-    }
-
-    @Override
-    public DateTime truncate(DateTimeUnit unit) {
-        // TODO
-        return null;
-    }
-
-    @Override
-    public DateTimeUnit getPrecision() {
-        return time.getPrecision();
-    }
-
-    @Override
-    public boolean unitsAllAbsent(DateTimeUnit... units) {
-        // TODO
-        return false;
-    }
-
-    @Override
-    public boolean unitsAllPresent(DateTimeUnit... units) {
-        // TODO
-        return false;
     }
 
     @Override

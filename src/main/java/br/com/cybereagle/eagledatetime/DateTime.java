@@ -18,7 +18,11 @@ package br.com.cybereagle.eagledatetime;
 
 import br.com.cybereagle.eagledatetime.internal.interfaces.CommonDateTimeOperations;
 
+import java.util.TimeZone;
+
 public interface DateTime extends CommonDateTimeOperations<DateTime> {
+
+    DateTime changeTimeZone(TimeZone fromTimeZone, TimeZone toTimeZone);
 
     Date getDate();
 
@@ -65,5 +69,13 @@ public interface DateTime extends CommonDateTimeOperations<DateTime> {
     Integer getNanoseconds();
 
     long numberOfSecondsFrom(DateTime time);
+
+    DateTime plus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, Integer nanoseconds);
+
+    DateTime plus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second);
+
+    DateTime minus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, Integer nanoseconds);
+
+    DateTime minus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second);
 
 }

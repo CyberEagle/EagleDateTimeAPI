@@ -14,9 +14,8 @@
  *    limitations under the License.
  */
 
-package br.com.cybereagle.eagledatetime.internal;
+package br.com.cybereagle.eagledatetime.internal.gregorian;
 
-import br.com.cybereagle.eagledatetime.DateTimeUnit;
 import br.com.cybereagle.eagledatetime.Time;
 
 import java.util.Locale;
@@ -62,6 +61,26 @@ public class TimeImpl implements Time {
     }
 
     @Override
+    public Time plus(Integer hour, Integer minute, Integer second, Integer nanoseconds) {
+        return null;
+    }
+
+    @Override
+    public Time plus(Integer hour, Integer minute, Integer second) {
+        return null;
+    }
+
+    @Override
+    public Time minus(Integer hour, Integer minute, Integer second, Integer nanoseconds) {
+        return null;
+    }
+
+    @Override
+    public Time minus(Integer hour, Integer minute, Integer second) {
+        return null;
+    }
+
+    @Override
     public Time changeTimeZone(TimeZone fromTimeZone, TimeZone toTimeZone) {
         return null;
     }
@@ -99,26 +118,6 @@ public class TimeImpl implements Time {
     @Override
     public Time plus(Time object) {
         return null;
-    }
-
-    @Override
-    public Time truncate(DateTimeUnit unit) {
-        return null;
-    }
-
-    @Override
-    public DateTimeUnit getPrecision() {
-        return null;
-    }
-
-    @Override
-    public boolean unitsAllAbsent(DateTimeUnit... units) {
-        return false;
-    }
-
-    @Override
-    public boolean unitsAllPresent(DateTimeUnit... units) {
-        return false;
     }
 
     @Override

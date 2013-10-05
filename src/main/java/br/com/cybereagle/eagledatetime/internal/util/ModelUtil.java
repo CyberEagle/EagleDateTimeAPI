@@ -193,7 +193,7 @@ import java.lang.reflect.Array;
  * @author Hirondelle Systems
  * @author with a contribution by an anonymous user of javapractices.com
  */
-final class ModelUtil {
+public final class ModelUtil {
 
     // TO STRING //
 
@@ -397,7 +397,7 @@ final class ModelUtil {
      * further field-by-field examination is necessary. The caller must always perform a
      * check-for-null on the return value.</span>
      */
-    static Boolean quickEquals(Object aThis, Object aThat) {
+    public static Boolean quickEquals(Object aThis, Object aThat) {
         Boolean result = null;
         if (aThis == aThat) {
             result = Boolean.TRUE;
@@ -422,7 +422,7 @@ final class ModelUtil {
      * <P>If a primitive field is significant, then it must be converted to a corresponding
      * wrapper <tt>Object</tt> by the caller.
      */
-    static boolean equalsFor(Object[] aThisSignificantFields, Object[] aThatSignificantFields) {
+    public static boolean equalsFor(Object[] aThisSignificantFields, Object[] aThatSignificantFields) {
         //(varargs can be used for final arg only)
         if (aThisSignificantFields.length != aThatSignificantFields.length) {
             throw new IllegalArgumentException(
