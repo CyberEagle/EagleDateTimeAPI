@@ -45,6 +45,10 @@ public interface Time extends CommonDateTimeOperations<Time> {
 
     Time minus(Integer hour, Integer minute, Integer second);
 
+    Time plus(Time that);
+
+    Time minus(Time that);
+
     String format(String format, List<String> amPmIndicators);
 
 }

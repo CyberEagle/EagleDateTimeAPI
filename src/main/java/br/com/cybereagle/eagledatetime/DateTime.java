@@ -71,25 +71,21 @@ public interface DateTime extends CommonDateTimeOperations<DateTime> {
 
     long numberOfSecondsFrom(DateTime that);
 
-    DateTime plus(Time time);
+    DateTime plus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, Integer nanoseconds, DayOverflow dayOverflow);
 
-    DateTime plus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, Integer nanoseconds);
+    DateTime plus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, DayOverflow dayOverflow);
 
-    DateTime plus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second);
+    DateTime plus(Integer hour, Integer minute, Integer second, Integer nanoseconds, DayOverflow dayOverflow);
 
-    DateTime plus(Integer hour, Integer minute, Integer second, Integer nanoseconds);
+    DateTime plus(Integer hour, Integer minute, Integer second, DayOverflow dayOverflow);
 
-    DateTime plus(Integer hour, Integer minute, Integer second);
+    DateTime minus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, Integer nanoseconds, DayOverflow dayOverflow);
 
-    DateTime minus(Time time);
+    DateTime minus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, DayOverflow dayOverflow);
 
-    DateTime minus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, Integer nanoseconds);
+    DateTime minus(Integer hour, Integer minute, Integer second, Integer nanoseconds, DayOverflow dayOverflow);
 
-    DateTime minus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second);
-
-    DateTime minus(Integer hour, Integer minute, Integer second, Integer nanoseconds);
-
-    DateTime minus(Integer hour, Integer minute, Integer second);
+    DateTime minus(Integer hour, Integer minute, Integer second, DayOverflow dayOverflow);
 
     String format(String format, List<String> months, List<String> weekdays, List<String> amPmIndicators);
 

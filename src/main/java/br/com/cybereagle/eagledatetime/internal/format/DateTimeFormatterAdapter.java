@@ -14,16 +14,16 @@ import java.util.TimeZone;
 /**
  * It's an adapter to use {@link Date} and {@link Time} with the {@link br.com.cybereagle.eagledatetime.internal.format.DateTimeFormatter}.
  */
-public class DateTimeAdapter implements DateTime {
+public class DateTimeFormatterAdapter implements DateTime {
 
     private Date date;
     private Time time;
 
-    public DateTimeAdapter(Date date){
+    public DateTimeFormatterAdapter(Date date){
         this.date = date;
     }
 
-    public DateTimeAdapter(Time time){
+    public DateTimeFormatterAdapter(Time time){
         this.time = time;
     }
 

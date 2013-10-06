@@ -30,10 +30,6 @@ public interface CommonDateTimeOperations<T> extends Comparable<T>, Serializable
 
     long getNanosecondsInstant(TimeZone timeZone);
 
-    T minus(T object);
-
-    T plus(T object);
-
     boolean isInTheFuture(TimeZone timeZone);
 
     boolean isInThePast(TimeZone timeZone);

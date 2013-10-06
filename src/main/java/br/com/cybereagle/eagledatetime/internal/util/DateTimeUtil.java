@@ -62,17 +62,4 @@ public class DateTimeUtil {
         return result;
     }
 
-    public static int numSecondsInTimePortion(Integer hour, Integer minute, Integer second){
-        int result = 0;
-        if (second != null) {
-            result = result + second;
-        }
-        if (minute != null) {
-            result = result + 60 * minute;
-        }
-        if (hour != null) {
-            result = result + 3600 * hour;
-        }
-        return result;
-    }
 }

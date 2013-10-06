@@ -18,6 +18,7 @@ package br.com.cybereagle.eagledatetime.internal.gregorian;
 
 import br.com.cybereagle.eagledatetime.Date;
 import br.com.cybereagle.eagledatetime.DateTime;
+import br.com.cybereagle.eagledatetime.DayOverflow;
 import br.com.cybereagle.eagledatetime.Time;
 import br.com.cybereagle.eagledatetime.factory.GregorianDateTime;
 import br.com.cybereagle.eagledatetime.internal.format.DateTimeFormatter;
@@ -197,53 +198,59 @@ public class DateTimeImpl implements DateTime {
     }
 
     @Override
-    public DateTime plus(Time time) {
-        return null;
+    public DateTime plus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, Integer nanoseconds, DayOverflow dayOverflow) {
+        DateTimeInterval interval = new DateTimeInterval(this, dayOverflow);
+        interval.plus(year, month, day, hour, minute, second, nanoseconds);
+        return GregorianDateTime.newDateTime(interval.getResultYear(), interval.getResultMonth(), interval.getResultDay(), interval.getResultHour(), interval.getResultMinute(), interval.getResultSecond(), interval.getResultNanoseconds());
     }
 
     @Override
-    public DateTime plus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, Integer nanoseconds) {
-        return null;
+    public DateTime plus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, DayOverflow dayOverflow) {
+        DateTimeInterval interval = new DateTimeInterval(this, dayOverflow);
+        interval.plus(year, month, day, hour, minute, second, 0);
+        return GregorianDateTime.newDateTime(interval.getResultYear(), interval.getResultMonth(), interval.getResultDay(), interval.getResultHour(), interval.getResultMinute(), interval.getResultSecond(), interval.getResultNanoseconds());
     }
 
     @Override
-    public DateTime plus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second) {
-        return null;
+    public DateTime plus(Integer hour, Integer minute, Integer second, Integer nanoseconds, DayOverflow dayOverflow) {
+        DateTimeInterval interval = new DateTimeInterval(this, dayOverflow);
+        interval.plus(hour, minute, second, nanoseconds);
+        return GregorianDateTime.newDateTime(interval.getResultYear(), interval.getResultMonth(), interval.getResultDay(), interval.getResultHour(), interval.getResultMinute(), interval.getResultSecond(), interval.getResultNanoseconds());
     }
 
     @Override
-    public DateTime plus(Integer hour, Integer minute, Integer second, Integer nanoseconds) {
-        return null;
+    public DateTime plus(Integer hour, Integer minute, Integer second, DayOverflow dayOverflow) {
+        DateTimeInterval interval = new DateTimeInterval(this, dayOverflow);
+        interval.plus(hour, minute, second, 0);
+        return GregorianDateTime.newDateTime(interval.getResultYear(), interval.getResultMonth(), interval.getResultDay(), interval.getResultHour(), interval.getResultMinute(), interval.getResultSecond(), interval.getResultNanoseconds());
     }
 
     @Override
-    public DateTime plus(Integer hour, Integer minute, Integer second) {
-        return null;
+    public DateTime minus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, Integer nanoseconds, DayOverflow dayOverflow) {
+        DateTimeInterval interval = new DateTimeInterval(this, dayOverflow);
+        interval.minus(year, month, day, hour, minute, second, nanoseconds);
+        return GregorianDateTime.newDateTime(interval.getResultYear(), interval.getResultMonth(), interval.getResultDay(), interval.getResultHour(), interval.getResultMinute(), interval.getResultSecond(), interval.getResultNanoseconds());
     }
 
     @Override
-    public DateTime minus(Time time) {
-        return null;
+    public DateTime minus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, DayOverflow dayOverflow) {
+        DateTimeInterval interval = new DateTimeInterval(this, dayOverflow);
+        interval.minus(year, month, day, hour, minute, second, 0);
+        return GregorianDateTime.newDateTime(interval.getResultYear(), interval.getResultMonth(), interval.getResultDay(), interval.getResultHour(), interval.getResultMinute(), interval.getResultSecond(), interval.getResultNanoseconds());
     }
 
     @Override
-    public DateTime minus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, Integer nanoseconds) {
-        return null;
+    public DateTime minus(Integer hour, Integer minute, Integer second, Integer nanoseconds, DayOverflow dayOverflow) {
+        DateTimeInterval interval = new DateTimeInterval(this, dayOverflow);
+        interval.plus(hour, minute, second, nanoseconds);
+        return GregorianDateTime.newDateTime(interval.getResultYear(), interval.getResultMonth(), interval.getResultDay(), interval.getResultHour(), interval.getResultMinute(), interval.getResultSecond(), interval.getResultNanoseconds());
     }
 
     @Override
-    public DateTime minus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second) {
-        return null;
-    }
-
-    @Override
-    public DateTime minus(Integer hour, Integer minute, Integer second, Integer nanoseconds) {
-        return null;
-    }
-
-    @Override
-    public DateTime minus(Integer hour, Integer minute, Integer second) {
-        return null;
+    public DateTime minus(Integer hour, Integer minute, Integer second, DayOverflow dayOverflow) {
+        DateTimeInterval interval = new DateTimeInterval(this, dayOverflow);
+        interval.minus(hour, minute, second, 0);
+        return GregorianDateTime.newDateTime(interval.getResultYear(), interval.getResultMonth(), interval.getResultDay(), interval.getResultHour(), interval.getResultMinute(), interval.getResultSecond(), interval.getResultNanoseconds());
     }
 
     @Override
@@ -317,18 +324,6 @@ public class DateTimeImpl implements DateTime {
         long baseResult = calendar.getTimeInMillis() * MILLION; // either sign
         //the adjustment for nanos is always positive, toward the future:
         return baseResult + nanosRemaining;
-    }
-
-    @Override
-    public DateTime minus(DateTime dateTime) {
-        // TODO
-        return null;
-    }
-
-    @Override
-    public DateTime plus(DateTime dateTime) {
-        // TODO
-        return null;
     }
 
     @Override

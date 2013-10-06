@@ -18,9 +18,8 @@ package br.com.cybereagle.eagledatetime.internal.gregorian;
 
 import br.com.cybereagle.eagledatetime.Time;
 import br.com.cybereagle.eagledatetime.factory.GregorianDateTime;
-import br.com.cybereagle.eagledatetime.internal.format.DateTimeAdapter;
+import br.com.cybereagle.eagledatetime.internal.format.DateTimeFormatterAdapter;
 import br.com.cybereagle.eagledatetime.internal.format.DateTimeFormatter;
-import br.com.cybereagle.eagledatetime.internal.util.DateTimeUtil;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -109,45 +108,78 @@ public class TimeImpl implements Time {
 
     @Override
     public Time plus(Integer hour, Integer minute, Integer second, Integer nanoseconds) {
-        return null;
+        DateTimeInterval interval = new DateTimeInterval(this);
+        interval.plus(hour, minute, second, nanoseconds);
+        return GregorianDateTime.newTime(interval.getResultHour(), interval.getResultMinute(), interval.getResultSecond(), interval.getResultNanoseconds());
     }
 
     @Override
     public Time plus(Integer hour, Integer minute, Integer second) {
-        return null;
+        DateTimeInterval interval = new DateTimeInterval(this);
+        interval.plus(hour, minute, second);
+        return GregorianDateTime.newTime(interval.getResultHour(), interval.getResultMinute(), interval.getResultSecond(), interval.getResultNanoseconds());
     }
 
     @Override
     public Time minus(Integer hour, Integer minute, Integer second, Integer nanoseconds) {
-        return null;
+        DateTimeInterval interval = new DateTimeInterval(this);
+        interval.minus(hour, minute, second, nanoseconds);
+        return GregorianDateTime.newTime(interval.getResultHour(), interval.getResultMinute(), interval.getResultSecond(), interval.getResultNanoseconds());
     }
 
     @Override
     public Time minus(Integer hour, Integer minute, Integer second) {
-        return null;
+        DateTimeInterval interval = new DateTimeInterval(this);
+        interval.plus(hour, minute, second);
+        return GregorianDateTime.newTime(interval.getResultHour(), interval.getResultMinute(), interval.getResultSecond(), interval.getResultNanoseconds());
     }
 
     @Override
-    public String format(String format, List<String> amPmIndicators) {
-        DateTimeFormatter dateTimeFormatter = new DateTimeFormatter(format, null, null, amPmIndicators);
-        return dateTimeFormatter.format(new DateTimeAdapter(this));
+    public Time plus(Time that) {
+        DateTimeInterval interval = new DateTimeInterval(this);
+        interval.plus(that.getHour(), that.getMinute(), that.getSecond(), that.getNanoseconds());
+        return GregorianDateTime.newTime(interval.getResultHour(), interval.getResultMinute(), interval.getResultSecond(), interval.getResultNanoseconds());
+    }
+
+    @Override
+    public Time minus(Time that) {
+        DateTimeInterval interval = new DateTimeInterval(this);
+        interval.minus(that.getHour(), that.getMinute(), that.getSecond(), that.getNanoseconds());
+        return GregorianDateTime.newTime(interval.getResultHour(), interval.getResultMinute(), interval.getResultSecond(), interval.getResultNanoseconds());
     }
 
     @Override
     public Time changeTimeZone(TimeZone fromTimeZone, TimeZone toTimeZone) {
-        return null;
+        Calendar fromDate = new GregorianCalendar(fromTimeZone);
+        fromDate.set(Calendar.HOUR_OF_DAY, getHour());
+        fromDate.set(Calendar.MINUTE, getMinute());
+        //other items zeroed out here, since they don't matter for time zone calculations
+        fromDate.set(Calendar.SECOND, 0);
+        fromDate.set(Calendar.MILLISECOND, 0);
+
+        //millisecond precision is OK here, since the seconds/nanoseconds are not part of the calc
+        Calendar toDate = new GregorianCalendar(toTimeZone);
+        toDate.setTimeInMillis(fromDate.getTimeInMillis());
+
+        return GregorianDateTime.newTime(toDate.get(Calendar.HOUR_OF_DAY), getMinute(), getSecond(), getNanoseconds());
     }
 
     @Override
     public String format(String format) {
         DateTimeFormatter dateTimeFormatter = new DateTimeFormatter(format);
-        return dateTimeFormatter.format(new DateTimeAdapter(this));
+        return dateTimeFormatter.format(new DateTimeFormatterAdapter(this));
     }
 
     @Override
     public String format(String format, Locale locale) {
         DateTimeFormatter dateTimeFormatter = new DateTimeFormatter(format, locale);
-        return dateTimeFormatter.format(new DateTimeAdapter(this));
+        return dateTimeFormatter.format(new DateTimeFormatterAdapter(this));
+    }
+
+    @Override
+    public String format(String format, List<String> amPmIndicators) {
+        DateTimeFormatter dateTimeFormatter = new DateTimeFormatter(format, null, null, amPmIndicators);
+        return dateTimeFormatter.format(new DateTimeFormatterAdapter(this));
     }
 
     @Override
@@ -176,16 +208,6 @@ public class TimeImpl implements Time {
         long baseResult = calendar.getTimeInMillis() * MILLION; // either sign
         //the adjustment for nanos is always positive, toward the future:
         return baseResult + nanosRemaining;
-    }
-
-    @Override
-    public Time minus(Time that) {
-        return null;
-    }
-
-    @Override
-    public Time plus(Time that) {
-        return null;
     }
 
     @Override

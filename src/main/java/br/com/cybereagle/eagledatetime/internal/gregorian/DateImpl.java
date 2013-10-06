@@ -17,9 +17,10 @@
 package br.com.cybereagle.eagledatetime.internal.gregorian;
 
 import br.com.cybereagle.eagledatetime.Date;
+import br.com.cybereagle.eagledatetime.DayOverflow;
 import br.com.cybereagle.eagledatetime.exception.ItemOutOfRange;
 import br.com.cybereagle.eagledatetime.factory.GregorianDateTime;
-import br.com.cybereagle.eagledatetime.internal.format.DateTimeAdapter;
+import br.com.cybereagle.eagledatetime.internal.format.DateTimeFormatterAdapter;
 import br.com.cybereagle.eagledatetime.internal.format.DateTimeFormatter;
 import br.com.cybereagle.eagledatetime.internal.util.DateTimeUtil;
 
@@ -183,31 +184,35 @@ public class DateImpl implements Date {
     }
 
     @Override
-    public Date plus(Integer year, Integer month, Integer day) {
-        return null;
+    public Date plus(Integer year, Integer month, Integer day, DayOverflow dayOverflow) {
+        DateTimeInterval interval = new DateTimeInterval(this, dayOverflow);
+        interval.plus(year, month, day);
+        return GregorianDateTime.newDate(interval.getResultYear(), interval.getResultMonth(), interval.getResultDay());
     }
 
     @Override
-    public Date minus(Integer year, Integer month, Integer day) {
-        return null;
+    public Date minus(Integer year, Integer month, Integer day, DayOverflow dayOverflow) {
+        DateTimeInterval interval = new DateTimeInterval(this, dayOverflow);
+        interval.minus(year, month, day);
+        return GregorianDateTime.newDate(interval.getResultYear(), interval.getResultMonth(), interval.getResultDay());
     }
 
     @Override
     public String format(String format, List<String> months, List<String> weekdays) {
         DateTimeFormatter dateTimeFormatter = new DateTimeFormatter(format, months, weekdays, null);
-        return dateTimeFormatter.format(new DateTimeAdapter(this));
+        return dateTimeFormatter.format(new DateTimeFormatterAdapter(this));
     }
 
     @Override
     public String format(String format) {
         DateTimeFormatter dateTimeFormatter = new DateTimeFormatter(format);
-        return dateTimeFormatter.format(new DateTimeAdapter(this));
+        return dateTimeFormatter.format(new DateTimeFormatterAdapter(this));
     }
 
     @Override
     public String format(String format, Locale locale) {
         DateTimeFormatter dateTimeFormatter = new DateTimeFormatter(format, locale);
-        return dateTimeFormatter.format(new DateTimeAdapter(this));
+        return dateTimeFormatter.format(new DateTimeFormatterAdapter(this));
     }
 
     @Override
@@ -242,16 +247,6 @@ public class DateImpl implements Date {
         calendar.set(Calendar.MILLISECOND, 0);
 
         return calendar.getTimeInMillis() * MILLION;
-    }
-
-    @Override
-    public Date minus(Date object) {
-        return null;
-    }
-
-    @Override
-    public Date plus(Date object) {
-        return null;
     }
 
     @Override

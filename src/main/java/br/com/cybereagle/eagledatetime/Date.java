@@ -56,9 +56,9 @@ public interface Date extends CommonDateTimeOperations<Date> {
 
     Integer numberOfDaysFrom(Date date);
 
-    Date plus(Integer year, Integer month, Integer day);
+    Date plus(Integer year, Integer month, Integer day, DayOverflow dayOverflow);
 
-    Date minus(Integer year, Integer month, Integer day);
+    Date minus(Integer year, Integer month, Integer day, DayOverflow dayOverflow);
 
     String format(String format, List<String> months, List<String> weekdays);
 
