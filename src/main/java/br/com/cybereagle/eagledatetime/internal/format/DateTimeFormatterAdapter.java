@@ -2,6 +2,7 @@ package br.com.cybereagle.eagledatetime.internal.format;
 
 import br.com.cybereagle.eagledatetime.Date;
 import br.com.cybereagle.eagledatetime.DateTime;
+import br.com.cybereagle.eagledatetime.DayOverflow;
 import br.com.cybereagle.eagledatetime.Time;
 import br.com.cybereagle.eagledatetime.exception.InvalidFormatForDateException;
 import br.com.cybereagle.eagledatetime.exception.InvalidFormatForTimeException;
@@ -172,52 +173,42 @@ public class DateTimeFormatterAdapter implements DateTime {
     }
 
     @Override
-    public DateTime plus(Time time) {
+    public DateTime plus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, Integer nanoseconds, DayOverflow dayOverflow) {
         throw new NotImplementedException();
     }
 
     @Override
-    public DateTime plus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, Integer nanoseconds) {
+    public DateTime plus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, DayOverflow dayOverflow) {
         throw new NotImplementedException();
     }
 
     @Override
-    public DateTime plus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second) {
+    public DateTime plus(Integer hour, Integer minute, Integer second, Integer nanoseconds, DayOverflow dayOverflow) {
         throw new NotImplementedException();
     }
 
     @Override
-    public DateTime plus(Integer hour, Integer minute, Integer second, Integer nanoseconds) {
+    public DateTime plus(Integer hour, Integer minute, Integer second, DayOverflow dayOverflow) {
         throw new NotImplementedException();
     }
 
     @Override
-    public DateTime plus(Integer hour, Integer minute, Integer second) {
+    public DateTime minus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, Integer nanoseconds, DayOverflow dayOverflow) {
         throw new NotImplementedException();
     }
 
     @Override
-    public DateTime minus(Time time) {
+    public DateTime minus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, DayOverflow dayOverflow) {
         throw new NotImplementedException();
     }
 
     @Override
-    public DateTime minus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, Integer nanoseconds) {
+    public DateTime minus(Integer hour, Integer minute, Integer second, Integer nanoseconds, DayOverflow dayOverflow) {
         throw new NotImplementedException();
     }
 
     @Override
-    public DateTime minus(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second) {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public DateTime minus(Integer hour, Integer minute, Integer second, Integer nanoseconds) {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public DateTime minus(Integer hour, Integer minute, Integer second) {
+    public DateTime minus(Integer hour, Integer minute, Integer second, DayOverflow dayOverflow) {
         throw new NotImplementedException();
     }
 
@@ -243,16 +234,6 @@ public class DateTimeFormatterAdapter implements DateTime {
 
     @Override
     public long getNanosecondsInstant(TimeZone timeZone) {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public DateTime minus(DateTime object) {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public DateTime plus(DateTime object) {
         throw new NotImplementedException();
     }
 
