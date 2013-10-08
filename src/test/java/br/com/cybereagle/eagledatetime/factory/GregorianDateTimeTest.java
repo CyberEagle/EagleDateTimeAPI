@@ -1,3 +1,19 @@
+/*
+ * Copyright 2013 Cyber Eagle
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
 package br.com.cybereagle.eagledatetime.factory;
 
 import br.com.cybereagle.eagledatetime.Date;
@@ -5,27 +21,35 @@ import br.com.cybereagle.eagledatetime.DateTime;
 import br.com.cybereagle.eagledatetime.Time;
 import org.junit.Test;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
+
 import static org.fest.assertions.api.Assertions.assertThat;
 
 public class GregorianDateTimeTest {
 
-    public static final int YEAR = 2009;
-    public static final int MONTH = 3;
-    public static final int DAY = 10;
-    public static final int HOUR = 22;
-    public static final int MINUTE = 46;
-    public static final int SECOND = 30;
-    public static final int NANOSECONDS = 532643678;
+    private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("UTC");
+
+    private static final int YEAR = 2009;
+    private static final int MONTH = 3;
+    private static final int DAY = 10;
+    private static final int HOUR = 22;
+    private static final int MINUTE = 46;
+    private static final int SECOND = 30;
+    private static final int NANOSECONDS = 532643678;
 
     @Test
-    public void shouldCreateNewDateCorrectly(){
+    public void shouldCreateNewDate(){
         Date date = GregorianDateTime.newDate(YEAR, MONTH, DAY);
 
         verify(date, YEAR, MONTH, DAY);
     }
 
     @Test
-    public void shouldCreateNewTimeCorrectlyWithAndWithoutNanoseconds(){
+    public void shouldCreateNewTimeWithAndWithoutNanoseconds(){
         Time time = GregorianDateTime.newTime(HOUR, MINUTE, SECOND, NANOSECONDS);
 
         verify(time, HOUR, MINUTE, SECOND, NANOSECONDS);
@@ -36,7 +60,7 @@ public class GregorianDateTimeTest {
     }
 
     @Test
-    public void shouldCreateNewDateTimeCorrectlyWithAndWithoutNanoseconds(){
+    public void shouldCreateNewDateTimeWithAndWithoutNanoseconds(){
         DateTime dateTime = GregorianDateTime.newDateTime(YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, NANOSECONDS);
         verify(dateTime, YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, NANOSECONDS);
 
@@ -46,12 +70,147 @@ public class GregorianDateTimeTest {
     }
 
     @Test
-    public void shouldCreateNewDateTimeWithDateAndTimeCorrectly(){
+    public void shouldCreateNewDateTimeWithDateAndTime(){
         Date date = GregorianDateTime.newDate(YEAR, MONTH, DAY);
         Time time = GregorianDateTime.newTime(HOUR, MINUTE, SECOND, NANOSECONDS);
 
         DateTime dateTime = GregorianDateTime.newDateTime(date, time);
         verify(dateTime, YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, NANOSECONDS);
+    }
+
+    @Test
+    public void shouldCreateDateTimeForInstant(){
+        Calendar calendar = new GregorianCalendar(TIME_ZONE);
+        long instant = System.currentTimeMillis();
+        calendar.setTimeInMillis(instant);
+
+        DateTime dateTime = GregorianDateTime.forInstant(instant, TIME_ZONE);
+
+        verify(dateTime, calendar);
+    }
+
+    @Test
+    public void shouldCreateDateTimeForInstantNanos() throws ParseException {
+        java.util.Date javaDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss z").parse("2009-03-10T22:46:30 " + TIME_ZONE.getID());
+        long nanos = javaDate.getTime() * (long)Math.pow(10, 6) + NANOSECONDS;
+
+        DateTime dateTime = GregorianDateTime.forInstantNanos(nanos, TIME_ZONE);
+        verify(dateTime, YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, NANOSECONDS);
+    }
+
+    @Test
+    public void shouldCreateDateTimeForNow(){
+        long millis = System.currentTimeMillis();
+        DateTime dateTime = GregorianDateTime.now(TIME_ZONE);
+
+        Calendar calendar = new GregorianCalendar(TIME_ZONE);
+        calendar.setTimeInMillis(millis);
+
+        verify(dateTime, calendar);
+    }
+
+    @Test
+    public void shouldCreateDateForInstant(){
+        long millis = System.currentTimeMillis();
+
+        Date date = GregorianDateTime.forInstantDateOnly(millis, TIME_ZONE);
+        Calendar calendar = new GregorianCalendar(TIME_ZONE);
+        calendar.setTimeInMillis(millis);
+
+        verify(date, calendar);
+    }
+
+    @Test
+    public void shouldCreateDateForToday(){
+        long millis = System.currentTimeMillis();
+
+        Date date = GregorianDateTime.today(TIME_ZONE);
+        Calendar calendar = new GregorianCalendar(TIME_ZONE);
+        calendar.setTimeInMillis(millis);
+
+        verify(date, calendar);
+    }
+
+    @Test
+    public void shouldCreateTimeForInstant(){
+        long millis = System.currentTimeMillis();
+
+        Time time = GregorianDateTime.forInstantTimeOnly(millis, TIME_ZONE);
+        Calendar calendar = new GregorianCalendar(TIME_ZONE);
+        calendar.setTimeInMillis(millis);
+
+        verify(time, calendar);
+    }
+
+    @Test
+    public void shouldCreateTimeForInstantNanos() throws ParseException {
+        java.util.Date javaDate = new SimpleDateFormat("HH:mm:ss z").parse("22:46:30 " + TIME_ZONE.getID());
+        long nanos = javaDate.getTime() * (long)Math.pow(10, 6) + NANOSECONDS;
+
+        Time time = GregorianDateTime.forInstantNanosTimeOnly(nanos, TIME_ZONE);
+        verify(time, HOUR, MINUTE, SECOND, NANOSECONDS);
+    }
+
+    @Test
+    public void shouldCreateTimeForNow(){
+        long millis = System.currentTimeMillis();
+        Time time = GregorianDateTime.nowTimeOnly(TIME_ZONE);
+
+        Calendar calendar = new GregorianCalendar(TIME_ZONE);
+        calendar.setTimeInMillis(millis);
+
+        verify(time, calendar);
+    }
+
+    @Test
+    public void shouldCreateTimeForEndOfDay(){
+        Time time = GregorianDateTime.getEndOfDay();
+
+        verify(time, 23, 59, 59, 999999999);
+    }
+
+    @Test
+    public void shouldCreateTimeForStartOfDay(){
+        Time time = GregorianDateTime.getStartOfDay();
+
+        verify(time, 0, 0, 0, 0);
+    }
+
+    @Test
+    public void shouldCreateDateFromJulianDayNumberAtNoon(){
+        // TODO
+    }
+
+    @Test
+    public void shouldParseDate(){
+        // TODO
+    }
+
+    @Test
+    public void shouldParseTime(){
+        // TODO
+    }
+
+    @Test
+    public void shouldParseDateTime(){
+        // TODO
+    }
+
+    private void verify(Date date, Calendar calendar) {
+        verify(date, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1,
+                calendar.get(Calendar.DAY_OF_MONTH));
+    }
+
+    private void verify(Time time, Calendar calendar) {
+        verify(time, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE),
+                calendar.get(Calendar.SECOND), calendar.get(Calendar.MILLISECOND) * (int)Math.pow(10, 6));
+    }
+
+    private void verify(DateTime dateTime, Calendar calendar) {
+        verify(dateTime, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1,
+                calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR),
+                calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND),
+                calendar.get(Calendar.MILLISECOND) * (int)Math.pow(10, 6));
     }
 
     private void verify(Date date, Integer year, Integer month, Integer day) {
