@@ -183,17 +183,31 @@ public class GregorianDateTimeTest {
 
     @Test
     public void shouldParseDate(){
-        // TODO
+        Date date = GregorianDateTime.parseDate("2009-03-10");
+
+        verify(date, YEAR, MONTH, DAY);
     }
 
     @Test
     public void shouldParseTime(){
-        // TODO
+        Time timeWithoutDecimalSeconds = GregorianDateTime.parseTime("22:46:30");
+        Time timeWithDecimalSeconds = GregorianDateTime.parseTime("22:46:30.532643678");
+
+        verify(timeWithoutDecimalSeconds, HOUR, MINUTE, SECOND, 0);
+        verify(timeWithDecimalSeconds, HOUR, MINUTE, SECOND, NANOSECONDS);
     }
 
     @Test
     public void shouldParseDateTime(){
-        // TODO
+        DateTime dateTimeWithoutDecimalSeconds = GregorianDateTime.parseDateTime("2009-03-10 22:46:30");
+        DateTime dateTimeWithDecimalSeconds = GregorianDateTime.parseDateTime("2009-03-10 22:46:30.532643678");
+        DateTime isoDateTimeWithoutDecimalSeconds = GregorianDateTime.parseDateTime("2009-03-10T22:46:30");
+        DateTime isoDateTimeWithDecimalSeconds = GregorianDateTime.parseDateTime("2009-03-10T22:46:30.532643678");
+
+        verify(dateTimeWithoutDecimalSeconds, YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, 0);
+        verify(dateTimeWithDecimalSeconds, YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, NANOSECONDS);
+        verify(isoDateTimeWithoutDecimalSeconds, YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, 0);
+        verify(isoDateTimeWithDecimalSeconds, YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, NANOSECONDS);
     }
 
     private void verify(Date date, Calendar calendar) {
