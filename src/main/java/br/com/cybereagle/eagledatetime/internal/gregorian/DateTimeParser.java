@@ -127,8 +127,14 @@ public final class DateTimeParser {
 
         Parts parts = splitIntoDateAndTime(dateTimeString);
 
-        if (!parts.hasTwoParts()) {
-            throw new IllegalArgumentException("String doesn't contain a date-time.");
+
+        if(parts.hasDateOnly()){
+            parseDateInternal(parts.datePart);
+            return GregorianDateTime.newDateTime(GregorianDateTime.newDate(fYear, fMonth, fDay), GregorianDateTime.getStartOfDay());
+        }
+        else if(parts.hasTimeOnly()){
+            parseTimeInternal(parts.timePart);
+            return GregorianDateTime.newDateTime(1, 1, 1, fHour, fMinute, fSecond, fNanosecond);
         }
 
         parseDateInternal(parts.datePart);

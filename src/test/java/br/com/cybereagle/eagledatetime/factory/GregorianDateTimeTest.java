@@ -19,7 +19,10 @@ package br.com.cybereagle.eagledatetime.factory;
 import br.com.cybereagle.eagledatetime.Date;
 import br.com.cybereagle.eagledatetime.DateTime;
 import br.com.cybereagle.eagledatetime.Time;
+import br.com.cybereagle.eagledatetime.exception.ItemOutOfRange;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -30,6 +33,9 @@ import java.util.TimeZone;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 public class GregorianDateTimeTest {
+
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     private static final TimeZone TIME_ZONE = TimeZone.getTimeZone("UTC");
 
@@ -46,6 +52,13 @@ public class GregorianDateTimeTest {
         Date date = GregorianDateTime.newDate(YEAR, MONTH, DAY);
 
         verify(date, YEAR, MONTH, DAY);
+    }
+
+    @Test
+    public void shouldFailToCreateDateWithInvalidDayOfMonth(){
+        exception.expect(ItemOutOfRange.class);
+
+        GregorianDateTime.newDate(2009, 2, 29);
     }
 
     @Test
@@ -189,6 +202,12 @@ public class GregorianDateTimeTest {
     }
 
     @Test
+    public void shouldFailToParseInvalidDate(){
+        exception.expect(NullPointerException.class);
+        Date date = GregorianDateTime.parseDate("2009-03");
+    }
+
+    @Test
     public void shouldParseTime(){
         Time timeWithoutDecimalSeconds = GregorianDateTime.parseTime("22:46:30");
         Time timeWithDecimalSeconds = GregorianDateTime.parseTime("22:46:30.532643678");
@@ -210,19 +229,70 @@ public class GregorianDateTimeTest {
         verify(isoDateTimeWithDecimalSeconds, YEAR, MONTH, DAY, HOUR, MINUTE, SECOND, NANOSECONDS);
     }
 
+    @Test
+    public void testIsParseableForDate(){
+        assertThat(GregorianDateTime.isParseableForDate("2009-03-10")).isTrue();
+        assertThat(GregorianDateTime.isParseableForDate("2009-03")).isFalse();
+        assertThat(GregorianDateTime.isParseableForDate("2009--10")).isFalse();
+        assertThat(GregorianDateTime.isParseableForDate("03-10")).isFalse();
+        assertThat(GregorianDateTime.isParseableForDate("2009-10")).isFalse();
+        assertThat(GregorianDateTime.isParseableForDate("10")).isFalse();
+        assertThat(GregorianDateTime.isParseableForDate("2009")).isFalse();
+        assertThat(GregorianDateTime.isParseableForDate("")).isFalse();
+        assertThat(GregorianDateTime.isParseableForDate(null)).isFalse();
+    }
+
+    @Test
+    public void testIsParseableForTime(){
+        assertThat(GregorianDateTime.isParseableForTime("22:46")).isTrue();
+        assertThat(GregorianDateTime.isParseableForTime("22:46:30")).isTrue();
+        assertThat(GregorianDateTime.isParseableForTime("22:46:30.123")).isTrue();
+        assertThat(GregorianDateTime.isParseableForTime("22:46:30.123456")).isTrue();
+        assertThat(GregorianDateTime.isParseableForTime("22:46:30.123456789")).isTrue();
+        assertThat(GregorianDateTime.isParseableForTime("22")).isFalse();
+        assertThat(GregorianDateTime.isParseableForTime("22::30.123456789")).isFalse();
+        assertThat(GregorianDateTime.isParseableForTime("22:46:30.1234567891252632")).isFalse();
+        assertThat(GregorianDateTime.isParseableForTime("22:46:-30.123456789")).isFalse();
+        assertThat(GregorianDateTime.isParseableForTime("46:30")).isFalse();
+        assertThat(GregorianDateTime.isParseableForTime("22:46:90.123456789")).isFalse();
+    }
+
+    @Test
+    public void testIsParseableForDateTime(){
+        assertThat(GregorianDateTime.isParseableForDateTime("2009-03-10")).isTrue();
+        assertThat(GregorianDateTime.isParseableForDateTime("2009-03-10 22:46")).isTrue();
+        assertThat(GregorianDateTime.isParseableForDateTime("2009-03-10T22:46")).isTrue();
+        assertThat(GregorianDateTime.isParseableForDateTime("2009-03-10 22:46:30")).isTrue();
+        assertThat(GregorianDateTime.isParseableForDateTime("2009-03-10T22:46:30")).isTrue();
+        assertThat(GregorianDateTime.isParseableForDateTime("2009-03-10 22:46:30.123")).isTrue();
+        assertThat(GregorianDateTime.isParseableForDateTime("2009-03-10T22:46:30.123")).isTrue();
+        assertThat(GregorianDateTime.isParseableForDateTime("2009-03-10 22:46:30.123456")).isTrue();
+        assertThat(GregorianDateTime.isParseableForDateTime("2009-03-10T22:46:30.123456")).isTrue();
+        assertThat(GregorianDateTime.isParseableForDateTime("2009-03-10 22:46:30.123456789")).isTrue();
+        assertThat(GregorianDateTime.isParseableForDateTime("2009-03-10T22:46:30.123456789")).isTrue();
+        assertThat(GregorianDateTime.isParseableForDateTime("22:46:30.123456")).isTrue();
+        assertThat(GregorianDateTime.isParseableForDateTime("2009-03-10")).isTrue();
+
+        assertThat(GregorianDateTime.isParseableForDateTime("2009-03-10TT22:46:30.123456789")).isFalse();
+        assertThat(GregorianDateTime.isParseableForDateTime("2009-03-10 22:46:30.123456789T")).isFalse();
+        assertThat(GregorianDateTime.isParseableForDateTime("2009-03")).isFalse();
+        assertThat(GregorianDateTime.isParseableForDateTime("22")).isFalse();
+        assertThat(GregorianDateTime.isParseableForDateTime("10T22")).isFalse();
+    }
+
     private void verify(Date date, Calendar calendar) {
         verify(date, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1,
                 calendar.get(Calendar.DAY_OF_MONTH));
     }
 
     private void verify(Time time, Calendar calendar) {
-        verify(time, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE),
+        verify(time, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
                 calendar.get(Calendar.SECOND), calendar.get(Calendar.MILLISECOND) * (int)Math.pow(10, 6));
     }
 
     private void verify(DateTime dateTime, Calendar calendar) {
         verify(dateTime, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1,
-                calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR),
+                calendar.get(Calendar.DAY_OF_MONTH), calendar.get(Calendar.HOUR_OF_DAY),
                 calendar.get(Calendar.MINUTE), calendar.get(Calendar.SECOND),
                 calendar.get(Calendar.MILLISECOND) * (int)Math.pow(10, 6));
     }

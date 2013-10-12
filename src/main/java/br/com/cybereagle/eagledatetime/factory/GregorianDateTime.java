@@ -33,8 +33,6 @@ import static br.com.cybereagle.eagledatetime.internal.util.DateTimeUtil.*;
 
 public class GregorianDateTime {
 
-    private static final DateTimeParser DATE_TIME_PARSER = new DateTimeParser();
-
     public static DateTime newDateTime(Date date, Time time) {
         return new DateTimeImpl(date, time);
     }
@@ -48,7 +46,8 @@ public class GregorianDateTime {
     }
 
     public static DateTime parseDateTime(String rawString) {
-        return DATE_TIME_PARSER.parseDateTime(rawString);
+        DateTimeParser dateTimeParser = new DateTimeParser();
+        return dateTimeParser.parseDateTime(rawString);
     }
 
     public static Date newDate(Integer year, Integer month, Integer day) {
@@ -56,7 +55,8 @@ public class GregorianDateTime {
     }
 
     public static Date parseDate(String rawString) {
-        return DATE_TIME_PARSER.parseDate(rawString);
+        DateTimeParser dateTimeParser = new DateTimeParser();
+        return dateTimeParser.parseDate(rawString);
     }
 
     public static Time newTime(Integer hour, Integer minute, Integer second, Integer nanoseconds) {
@@ -68,12 +68,14 @@ public class GregorianDateTime {
     }
 
     public static Time parseTime(String rawString) {
-        return DATE_TIME_PARSER.parseTime(rawString);
+        DateTimeParser dateTimeParser = new DateTimeParser();
+        return dateTimeParser.parseTime(rawString);
     }
 
     public static boolean isParseableForDateTime(String candidate) {
         try {
-            DATE_TIME_PARSER.parseDateTime(candidate);
+            DateTimeParser dateTimeParser = new DateTimeParser();
+            dateTimeParser.parseDateTime(candidate);
             return true;
         }
         catch (RuntimeException e){
@@ -83,7 +85,8 @@ public class GregorianDateTime {
 
     public static boolean isParseableForDate(String candidate) {
         try {
-            DATE_TIME_PARSER.parseDate(candidate);
+            DateTimeParser dateTimeParser = new DateTimeParser();
+            dateTimeParser.parseDate(candidate);
             return true;
         }
         catch (RuntimeException e){
@@ -93,7 +96,8 @@ public class GregorianDateTime {
 
     public static boolean isParseableForTime(String candidate) {
         try {
-            DATE_TIME_PARSER.parseTime(candidate);
+            DateTimeParser dateTimeParser = new DateTimeParser();
+            dateTimeParser.parseTime(candidate);
             return true;
         }
         catch (RuntimeException e){
