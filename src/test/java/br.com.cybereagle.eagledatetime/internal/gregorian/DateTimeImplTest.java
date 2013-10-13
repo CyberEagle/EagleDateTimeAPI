@@ -1,5 +1,7 @@
 package br.com.cybereagle.eagledatetime.internal.gregorian;
 
+import org.junit.Test;
+
 public class DateTimeImplTest {
 
     private static final boolean SUCCESS = true;
@@ -14,6 +16,11 @@ public class DateTimeImplTest {
 
     private static void log(String aMsg) {
         System.out.println(aMsg);
+    }
+
+    @Test
+    public void testSomething(){
+
     }
 
 }

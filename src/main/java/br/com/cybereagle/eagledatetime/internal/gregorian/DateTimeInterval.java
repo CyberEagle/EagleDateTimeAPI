@@ -183,7 +183,7 @@ public final class DateTimeInterval {
     }
 
     protected void changeHour() {
-        if (resultDay != null) {
+        if (resultHour != null) {
             int count = 0;
             while (count < hourIncrement) {
                 stepHour();

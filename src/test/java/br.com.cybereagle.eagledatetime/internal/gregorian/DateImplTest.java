@@ -20,6 +20,9 @@ import org.junit.Test;
 
 public class DateImplTest {
 
+    @Test
+    public void testSomething(){
 
+    }
 
 }
