@@ -16,10 +16,8 @@
 
 package br.com.cybereagle.eagledatetime.factory;
 
-import br.com.cybereagle.eagledatetime.Date;
-import br.com.cybereagle.eagledatetime.DateTime;
-import br.com.cybereagle.eagledatetime.DayOverflow;
-import br.com.cybereagle.eagledatetime.Time;
+import br.com.cybereagle.eagledatetime.*;
+import br.com.cybereagle.eagledatetime.internal.DefaultCurrentTimeService;
 import br.com.cybereagle.eagledatetime.internal.gregorian.DateImpl;
 import br.com.cybereagle.eagledatetime.internal.gregorian.DateTimeImpl;
 import br.com.cybereagle.eagledatetime.internal.gregorian.DateTimeParser;
@@ -32,6 +30,20 @@ import java.util.TimeZone;
 import static br.com.cybereagle.eagledatetime.internal.util.DateTimeUtil.*;
 
 public class GregorianDateTime {
+
+    private static CurrentTimeService currentTimeService;
+
+    static {
+        resetDefaultCurrentTimeService();
+    }
+
+    public static void setCurrentTimeService(CurrentTimeService currentTimeService) {
+        GregorianDateTime.currentTimeService = currentTimeService;
+    }
+
+    public static void resetDefaultCurrentTimeService(){
+        GregorianDateTime.currentTimeService = new DefaultCurrentTimeService();
+    }
 
     public static DateTime newDateTime(Date date, Time time) {
         return new DateTimeImpl(date, time);
@@ -142,7 +154,7 @@ public class GregorianDateTime {
     }
 
     public static DateTime now(TimeZone timeZone) {
-        return forInstant(System.currentTimeMillis(), timeZone);
+        return forInstant(currentTimeService.currentTimeMillis(), timeZone);
     }
 
     public static Date forInstantDateOnly(long millis, TimeZone timeZone) {
@@ -156,7 +168,7 @@ public class GregorianDateTime {
     }
 
     public static Date today(TimeZone timeZone) {
-        return forInstantDateOnly(System.currentTimeMillis(), timeZone);
+        return forInstantDateOnly(currentTimeService.currentTimeMillis(), timeZone);
     }
 
     public static Time forInstantTimeOnly(long millis, TimeZone timeZone) {
@@ -191,7 +203,7 @@ public class GregorianDateTime {
     }
 
     public static Time nowTimeOnly(TimeZone timeZone) {
-        return forInstantTimeOnly(System.currentTimeMillis(), timeZone);
+        return forInstantTimeOnly(currentTimeService.currentTimeMillis(), timeZone);
     }
 
     public static Time getEndOfDay() {
