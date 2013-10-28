@@ -116,7 +116,7 @@ public class TimeImpl implements Time {
     @Override
     public Time plus(Integer hour, Integer minute, Integer second) {
         DateTimeInterval interval = new DateTimeInterval(this);
-        interval.plus(hour, minute, second);
+        interval.plus(hour, minute, second, 0);
         return GregorianDateTime.newTime(interval.getResultHour(), interval.getResultMinute(), interval.getResultSecond(), interval.getResultNanoseconds());
     }
 
@@ -130,7 +130,7 @@ public class TimeImpl implements Time {
     @Override
     public Time minus(Integer hour, Integer minute, Integer second) {
         DateTimeInterval interval = new DateTimeInterval(this);
-        interval.plus(hour, minute, second);
+        interval.minus(hour, minute, second, 0);
         return GregorianDateTime.newTime(interval.getResultHour(), interval.getResultMinute(), interval.getResultSecond(), interval.getResultNanoseconds());
     }
 
