@@ -18,10 +18,7 @@ package br.com.cybereagle.eagledatetime.factory;
 
 import br.com.cybereagle.eagledatetime.*;
 import br.com.cybereagle.eagledatetime.internal.DefaultCurrentTimeService;
-import br.com.cybereagle.eagledatetime.internal.gregorian.DateImpl;
-import br.com.cybereagle.eagledatetime.internal.gregorian.DateTimeImpl;
-import br.com.cybereagle.eagledatetime.internal.gregorian.DateTimeParser;
-import br.com.cybereagle.eagledatetime.internal.gregorian.TimeImpl;
+import br.com.cybereagle.eagledatetime.internal.gregorian.*;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -55,6 +52,10 @@ public class GregorianDateTime {
 
     public static DateTime newDateTime(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second) {
         return newDateTime(year, month, day, hour, minute, second, 0);
+    }
+
+    public static AmountOfTime newAmountOfTime(Integer years, Integer months, Integer days, Integer hours, Integer minutes, Integer seconds, Integer nanoseconds){
+        return new AmountOfTimeImpl(years, months, days, hours, minutes, seconds, nanoseconds);
     }
 
     public static DateTime parseDateTime(String rawString) {

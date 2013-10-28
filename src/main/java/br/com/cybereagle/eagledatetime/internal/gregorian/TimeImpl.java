@@ -47,19 +47,6 @@ public class TimeImpl implements Time {
     }
 
     private void validateState(){
-        if(hour == null){
-            throw new NullPointerException("Hour can't be null");
-        }
-        if(minute == null){
-            throw new NullPointerException("Minute can't be null");
-        }
-        if(second == null){
-            throw new NullPointerException("Second can't be null");
-        }
-        if(nanoseconds == null){
-            throw new NullPointerException("Nanosecond can't be null");
-        }
-
         checkRange(hour, 0, 23, "Hour");
         checkRange(minute, 0, 59, "Minute");
         checkRange(second, 0, 59, "Second");

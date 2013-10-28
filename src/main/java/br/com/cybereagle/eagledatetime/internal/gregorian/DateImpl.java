@@ -47,16 +47,6 @@ public class DateImpl implements Date {
     }
 
     private void validateState(){
-        if(year == null){
-            throw new NullPointerException("Year can't be null");
-        }
-        if(month == null){
-            throw new NullPointerException("Month can't be null");
-        }
-        if(day == null){
-            throw new NullPointerException("Day can't be null");
-        }
-
         checkRange(year, 1, 9999, "Year");
         checkRange(month, 1, 12, "Month");
         checkRange(day, 1, 31, "Day");

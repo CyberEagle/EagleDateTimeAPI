@@ -24,10 +24,11 @@ public class DateTimeUtil {
     public static int EPOCH_MODIFIED_JD = 2400000;
 
     public static void checkRange(Integer aValue, int aMin, int aMax, String aName) {
-        if (aValue != null) {
-            if (aValue < aMin || aValue > aMax) {
-                throw new ItemOutOfRange(aName + " is not in the range " + aMin + ".." + aMax + ". Value is:" + aValue);
-            }
+        if(aValue == null){
+            throw new NullPointerException(aName + " can't be null.");
+        }
+        if (aValue < aMin || aValue > aMax) {
+            throw new ItemOutOfRange(aName + " is not in the range " + aMin + ".." + aMax + ". Value is:" + aValue);
         }
     }
 

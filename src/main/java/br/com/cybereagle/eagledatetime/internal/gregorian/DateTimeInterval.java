@@ -16,10 +16,7 @@
 
 package br.com.cybereagle.eagledatetime.internal.gregorian;
 
-import br.com.cybereagle.eagledatetime.Date;
-import br.com.cybereagle.eagledatetime.DateTime;
-import br.com.cybereagle.eagledatetime.DayOverflow;
-import br.com.cybereagle.eagledatetime.Time;
+import br.com.cybereagle.eagledatetime.*;
 import br.com.cybereagle.eagledatetime.internal.util.DateTimeUtil;
 
 /**
@@ -58,33 +55,25 @@ public final class DateTimeInterval {
     public DateTimeInterval(Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, Integer nanoseconds, DayOverflow dayOverflow) {
         this.dayOverflow = dayOverflow;
 
-        resultYear = year;
-        resultMonth = month;
-        resultDay = day;
-        resultHour = hour;
-        resultMinute = minute;
-        resultSecond = second;
-        resultNanoseconds = nanoseconds;
+        this.resultYear = year;
+        this.resultMonth = month;
+        this.resultDay = day;
+        this.resultHour = hour;
+        this.resultMinute = minute;
+        this.resultSecond = second;
+        this.resultNanoseconds = nanoseconds;
     }
 
     public DateTimeInterval(DateTime dateTime, DayOverflow dayOverflow) {
         this(dateTime.getYear(), dateTime.getMonth(), dateTime.getDay(), dateTime.getHour(), dateTime.getMinute(), dateTime.getSecond(), dateTime.getNanoseconds(), dayOverflow);
     }
 
-    public DateTimeInterval(Integer year, Integer month, Integer day, DayOverflow dayOverflow) {
-        this(year, month, day, null, null, null, null, dayOverflow);
-    }
-
     public DateTimeInterval(Date date, DayOverflow dayOverflow) {
-        this(date.getYear(), date.getMonth(), date.getDay(), dayOverflow);
-    }
-
-    public DateTimeInterval(Integer hour, Integer minute, Integer second, Integer nanoseconds) {
-        this(null, null, null, hour, minute, second, nanoseconds, null);
+        this(date.getYear(), date.getMonth(), date.getDay(), null, null, null, null, dayOverflow);
     }
 
     public DateTimeInterval(Time time) {
-        this(time.getHour(), time.getMinute(), time.getSecond(), time.getNanoseconds());
+        this(null, null, null, time.getHour(), time.getMinute(), time.getSecond(), time.getNanoseconds(), null);
     }
 
     public void plus(int year, int month, int day, int hour, int minute, int second, int nanosecond) {
