@@ -4,7 +4,9 @@ EagleDateTimeAPI
 It's an alternative to Date, Calendar and related Java APIs. It was created based on the following project:
 
 Date4J: http://www.date4j.net/
+
 Author: Hirondelle Systems
+
 License: BSD (http://www.date4j.net/LICENSE_BSD.txt)
 
 
